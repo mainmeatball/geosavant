@@ -1,0 +1,114 @@
+.grid-item {
+  // Shared button look
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  z-index: 100;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  // 🔥 PERFECT (bright yellow / trophy glow)
+  &.perfect {
+    background-color: #facc15; // yellow-400
+    color: #1e1e1e;
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.8), 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      background-color: #fde047; // yellow-300
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(250, 204, 21, 0.9);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  // ✅ COMPLETED (classic success green)
+  &.completed {
+    background-color: #28a745;
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
+
+    &:hover {
+      background-color: #34d058;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  &.progress {
+    position: relative;
+    background-color: #f3f4f6;
+    color: #1e1e1e;
+    overflow: hidden;
+    cursor: pointer;
+
+    // Progress bar fill - BEHIND text
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: var(--progress, 0%);
+      background: linear-gradient(90deg, #28a745, #34d058);
+      transition: width 0.4s ease;
+      z-index: 0; // explicitly behind text
+    }
+
+    // Create stacking context so children appear ABOVE ::before
+    z-index: 0; 
+    isolation: isolate;
+
+    // Ensure text always above ::before
+    * {
+      position: relative;
+      z-index: 1;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  // 🔒 LOCKED (disabled look)
+  &.locked {
+    background-color: #6b7280; // gray-500
+    color: #d1d5db; // gray-300
+    cursor: not-allowed;
+    opacity: 0.7;
+    position: relative;
+
+    &::after {
+      content: '🔒';
+      position: absolute;
+      right: 1rem;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}
