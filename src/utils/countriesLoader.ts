@@ -1,33 +1,37 @@
 import { Country, CountryNames, RegionData } from '../types';
 
 // Load countries data from JSON files
-export const loadCountriesData = async (language: 'en' | 'ru' = 'en'): Promise<Country[]> => {
+export const loadCountriesData = async (): Promise<Country[]> => {
   try {
-    const [countriesResponse, regionsResponse] = await Promise.all([
-      fetch(`/countries_${language}.json`),
-      fetch('/regions.json')
+    const [countriesEnResponse, countriesRuResponse, regionsResponse] = await Promise.all([
+      fetch(`${import.meta.env.BASE_URL}countries_en.json`),
+      fetch(`${import.meta.env.BASE_URL}countries_ru.json`),
+      fetch(`${import.meta.env.BASE_URL}regions.json`)
     ]);
 
-    const countryNames: CountryNames = await countriesResponse.json();
+    const countryEnNames: CountryNames = await countriesEnResponse.json();
+    const countryRuNames: CountryNames = await countriesRuResponse.json();
     const regionsData: RegionData[] = await regionsResponse.json();
-    
+
     const countries: Country[] = [];
-    
+
     regionsData.forEach(regionItem => {
       const countryCode = regionItem.alpha2.toLowerCase();
-      const countryName = countryNames[regionItem.alpha2];
-      
-      if (countryName) {
+      const countryEnName = countryEnNames[regionItem.alpha2];
+      const countryRuName = countryRuNames[regionItem.alpha2];
+
+      if (countryEnName) {
         countries.push({
           code: countryCode,
-          name: countryName,
+          nameEn: countryEnName,
+          nameRu: countryRuName,
           region: regionItem.region,
           subRegion: regionItem.subRegion,
-          flagPath: `/flags1000px/${countryCode}.png`
+          flagPath: `${import.meta.env.BASE_URL}flags1000px/${countryCode}.png`
         });
       }
     });
-    
+
     return countries;
   } catch (error) {
     console.error('Error loading countries data:', error);
@@ -35,24 +39,11 @@ export const loadCountriesData = async (language: 'en' | 'ru' = 'en'): Promise<C
   }
 };
 
-export const getFlagUrl = (countryCode: string): string => {
-  return `/flags1000px/${countryCode.toLowerCase()}.png`;
-};
-
-export const checkFlagExists = async (countryCode: string): Promise<boolean> => {
-  try {
-    const response = await fetch(getFlagUrl(countryCode), { method: 'HEAD' });
-    return response.ok;
-  } catch {
-    return false;
-  }
-};
-
 // Helper functions to filter countries by region
 export const getCountriesByRegion = (countries: Country[], region: string): Country[] => {
-  return countries.filter(country => country.region === region);
+  return countries.filter(country => country.region.toLowerCase() === region.toLowerCase());
 };
 
 export const getCountriesBySubRegion = (countries: Country[], subRegion: string): Country[] => {
-  return countries.filter(country => country.subRegion === subRegion);
+  return countries.filter(country => country.subRegion.toLowerCase() === subRegion.toLowerCase());
 };

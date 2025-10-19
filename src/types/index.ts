@@ -1,6 +1,7 @@
 export interface Country {
   code: string;
-  name: string;
+  nameEn: string;
+  nameRu: string;
 }
 
 export interface Theme {
@@ -11,14 +12,20 @@ export interface Theme {
 
 export interface Question {
   flagUrl: string;
-  correctName: string;
-  choices: string[];
+  correctEnName: string;
+  correctRuName: string;
+  choices: Choice[];
+}
+
+export interface Choice {
+  en: string;
+  ru: string;
 }
 
 export interface Feedback {
-  buttonIndex: number;
+  buttonIndex?: number;
   isCorrect: boolean;
-  correctIndex: number;
+  correctIndex?: number;
 }
 
 export interface CompletedLevel {
@@ -33,7 +40,6 @@ export interface CompletedLevels {
 
 export interface ManualQuestion {
   countryCode: string;
-  correctAnswer: string;
   wrongAnswers: string[];
 }
 
@@ -63,7 +69,8 @@ export interface Region {
 
 export interface Country {
   code: string;
-  name: string;
+  nameEn: string;
+  nameRu: string;
   region: string;
   subRegion: string;
   flagPath: string;
@@ -81,5 +88,11 @@ export interface RegionData {
   subRegionCode: string;
 }
 
+export interface Settings {
+  answersType: AnswersType;
+}
+
 
 export type PageType = 'main' | 'theme' | 'region' | 'level';
+
+export type AnswersType = '4-choices' | 'free';

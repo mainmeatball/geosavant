@@ -10,11 +10,16 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.0",
+    "@tma.js/bridge": "^2.0.2",
     "canvas-confetti": "^1.9.3",
     "framer-motion": "^12.23.24",
+    "fuse.js": "^7.1.0",
     "lucide-react": "^0.545.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -33,6 +38,6 @@
     "gh-pages": "^6.3.0",
     "globals": "^16.3.0",
     "sass-embedded": "^1.92.1",
-    "vite": "^7.1.2"
+    "vite": "^7.1.9"
   }
 }

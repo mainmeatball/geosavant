@@ -1,3 +1,272 @@
-.levelTitle {
+.quiz-container {
+  position: relative;
+
+  .question-counter {
+    display: block;
+    text-align: right;
+    margin-bottom: 1rem;
+  }
+
+  .levelTitle {
     text-align: center;
+  }
+
+  .progress-bar-container {
+    width: 100%;
+    max-width: 800px;
+    background-color: #ddd;
+    height: 10px;
+    border-radius: 10px;
+    margin: 20px auto;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background-color: green;
+    transition: width 0.3s;
+    border-radius: 10px;
+  }
+
+  .flag-image {
+    width: 80%;
+    max-width: 600px;
+    aspect-ratio: 3/2;
+    margin: 20px auto;
+    display: block;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    object-position: center;
+  }
+
+  .choices {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .choice-button {
+    padding: 16px 24px;
+    border: 2px solid #2c3e50;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #2c3e50;
+    font-size: 1.1em;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+
+  @media (hover: hover) {
+    .choice-button:hover {
+      background-color: #2e6dd9;
+      color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .choice-button.correct {
+    background-color: green;
+    color: white;
+    border-color: green;
+  }
+
+  .choice-button.incorrect {
+    background-color: red;
+    color: white;
+    border-color: red;
+  }
+
+  // Free answer styles
+  .free-answer-container {
+    display: flex;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    align-items: flex-start;
+
+    .input-wrapper {
+      flex: 1;
+      position: relative;
+      min-width: 0; 
+    }
+  }
+
+  .free-answer-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 24px;
+    border: 2px solid #2c3e50;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #2c3e50;
+    font-size: 1.1em;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #2e6dd9;
+      box-shadow: 0 0 0 3px rgba(46, 109, 217, 0.1);
+    }
+
+    &::placeholder {
+      color: #95a5a6;
+    }
+
+    &.correct {
+      border-color: #2ecc71;
+      background-color: #e8f8f2;
+      box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    &.incorrect {
+      border-color: #e74c3c;
+      background-color: #fef2f2;
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+      animation: shake 0.3s ease-in-out;
+    }
+
+    /* Optional shake effect */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-2px); }
+    }
+  }
+
+  .hints-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    background-color: #ffffff;
+    border: 2px solid #2c3e50;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-height: 240px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+
+  .hint-item {
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 1.05em;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #2c3e50;
+    border-bottom: 1px solid #e0e0e0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: #2e6dd9;
+        color: white;
+      }
+    }
+
+    &:active {
+      background-color: #2558b8;
+      color: white;
+    }
+
+    &.highlighted {
+      background-color: #2558b8;
+      color: white;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hints-dropdown {
+      max-height: 180px;
+    }
+
+    .hint-item {
+      padding: 10px 16px;
+      font-size: 0.95em;
+    }
+  }
+
+  .submit-answer-btn {
+    padding: 16px 32px;
+    border: 2px solid #2c3e50;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #2c3e50;
+    font-size: 1.1em;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: #2e6dd9;
+        color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .flag-image {
+      width: 80%;
+    }
+
+    .choice-button {
+      padding: 14px 16px;
+      font-size: 0.95em;
+    }
+
+    .choices {
+      gap: 12px;
+      max-width: 100%;
+    }
+
+    .progress-bar-container {
+      margin: 15px auto 20px;
+    }
+
+    .free-answer-container {
+      gap: 12px;
+      max-width: 100%;
+    }
+
+    .free-answer-input {
+      padding: 14px 16px;
+      font-size: 0.95em;
+    }
+
+    .submit-answer-btn {
+      padding: 14px 20px;
+      font-size: 0.95em;
+    }
+  }
 }

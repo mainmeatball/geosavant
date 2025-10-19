@@ -15,10 +15,10 @@ initializeCountries('en')
 
 createRoot(rootElement).render(
   <StrictMode>
-    <Router>
+    <Router basename="/geosavant">
       <GameProvider>
         <MainRouter />
       </GameProvider>
     </Router>
-  </StrictMode>,
+  </StrictMode>
 )

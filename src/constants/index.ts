@@ -5,9 +5,9 @@ import { loadCountriesData } from '../utils/countriesLoader';
 export let countries: Country[] = [];
 
 // Initialize countries data
-export const initializeCountries = async (language: 'en' | 'ru' = 'en') => {
+export const initializeCountries = async () => {
   try {
-    countries = await loadCountriesData(language);
+    countries = await loadCountriesData();
     console.log(`Loaded ${countries.length} countries`);
   } catch (error) {
     console.error('Failed to initialize countries:', error);
@@ -25,6 +25,10 @@ export const getCountries = (): Country[] => {
 export const getCountryByCode = (code: string): Country | undefined => {
   return countries.find(country => country.code === code);
 };
+
+export const getCountriesByRegion = (region: string): Country[] => {
+  return countries.filter(c => c.region === region);
+}
 
 export const themes: Theme[] = [
   { code: 'flags', name: 'Flags', icon: '🇷🇺' },

@@ -14,7 +14,7 @@ export { generateQuestionFromConfig, generateQuestionsFromConfigs, generateFlagQ
 export { capitalizeFirstLetter } from '../utils/stringUtils';
 
 // data/index.ts
-export { levelData, getLevelData, getLevelsForTheme } from '../data/levels';
+export { levelData } from '../data/levels';
 
 // constants/index.ts - Re-export everything
 export * from './index';

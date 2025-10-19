@@ -3,6 +3,7 @@ import { Trophy, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import "./LevelComplete.scss";
 import { Link } from 'react-router-dom';
+import confetti from "canvas-confetti";
 
 interface LevelCompleteProps {
   theme,
@@ -21,6 +22,11 @@ export const LevelComplete: React.FC<LevelCompleteProps> = ({
 }) => {
   const percentage = Math.round((score / totalQuestions) * 100);
   const isPerfect = percentage === 100;
+
+  
+  if (isPerfect) {
+    confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+  };
 
   return (
     <motion.div

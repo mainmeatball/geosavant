@@ -9,11 +9,11 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'ru', correctAnswer: 'Russia', wrongAnswers: ['Serbia', 'Slovakia', 'Slovenia'] },
-      { countryCode: 'de', correctAnswer: 'Germany', wrongAnswers: ['Belgium', 'Austria', 'Lithuania'] },
-      { countryCode: 'gb', correctAnswer: 'United Kingdom', wrongAnswers: ['Ireland', 'Norway', 'Iceland'] },
-      { countryCode: 'es', correctAnswer: 'Spain', wrongAnswers: ['Portugal', 'Romania', 'Moldova'] },
-      { countryCode: 'fr', correctAnswer: 'France', wrongAnswers: ['Luxembourg', 'Netherlands', 'Italy'] }
+      { countryCode: 'ru', wrongAnswers: ['rs', 'sk', 'si'] },
+      { countryCode: 'de', wrongAnswers: ['be', 'at', 'lt'] },
+      { countryCode: 'gb', wrongAnswers: ['ie', 'no', 'is'] },
+      { countryCode: 'es', wrongAnswers: ['pt', 'ro', 'md'] },
+      { countryCode: 'fr', wrongAnswers: ['lu', 'nl', 'it'] }
     ]
   },
 
@@ -25,11 +25,11 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'it', correctAnswer: 'Italy', wrongAnswers: ['Ireland', 'Hungary', 'Bulgaria'] },
-      { countryCode: 'pt', correctAnswer: 'Portugal', wrongAnswers: ['Spain', 'Romania', 'Moldova'] },
-      { countryCode: 'nl', correctAnswer: 'Netherlands', wrongAnswers: ['Luxembourg', 'Croatia', 'Serbia'] },
-      { countryCode: 'pl', correctAnswer: 'Poland', wrongAnswers: ['Monaco', 'Indonesia', 'Austria'] },
-      { countryCode: 'se', correctAnswer: 'Sweden', wrongAnswers: ['Finland', 'Iceland', 'Norway'] }
+      { countryCode: 'it', wrongAnswers: ['ie', 'hu', 'bg'] },
+      { countryCode: 'pt', wrongAnswers: ['es', 'ro', 'md'] },
+      { countryCode: 'nl', wrongAnswers: ['lu', 'hr', 'rs'] },
+      { countryCode: 'pl', wrongAnswers: ['mc', 'id', 'at'] },
+      { countryCode: 'se', wrongAnswers: ['fi', 'is', 'no'] }
     ]
   },
 
@@ -41,11 +41,11 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'no', correctAnswer: 'Norway', wrongAnswers: ['Denmark', 'Iceland', 'Finland'] },
-      { countryCode: 'fi', correctAnswer: 'Finland', wrongAnswers: ['Sweden', 'Norway', 'Iceland'] },
-      { countryCode: 'dk', correctAnswer: 'Denmark', wrongAnswers: ['Norway', 'Sweden', 'Finland'] },
-      { countryCode: 'ee', correctAnswer: 'Estonia', wrongAnswers: ['Latvia', 'Lithuania', 'Finland'] },
-      { countryCode: 'lv', correctAnswer: 'Latvia', wrongAnswers: ['Estonia', 'Lithuania', 'Poland'] }
+      { countryCode: 'no', wrongAnswers: ['dk', 'is', 'fi'] },
+      { countryCode: 'fi', wrongAnswers: ['se', 'no', 'is'] },
+      { countryCode: 'dk', wrongAnswers: ['no', 'se', 'fi'] },
+      { countryCode: 'ee', wrongAnswers: ['lv', 'lt', 'fi'] },
+      { countryCode: 'lv', wrongAnswers: ['ee', 'lt', 'pl'] }
     ]
   },
 
@@ -57,11 +57,11 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'ua', correctAnswer: 'Ukraine', wrongAnswers: ['Sweden', 'Romania', 'Moldova'] },
-      { countryCode: 'by', correctAnswer: 'Belarus', wrongAnswers: ['Russia', 'Latvia', 'Ukraine'] },
-      { countryCode: 'ro', correctAnswer: 'Romania', wrongAnswers: ['Chad', 'Moldova', 'Andorra'] },
-      { countryCode: 'bg', correctAnswer: 'Bulgaria', wrongAnswers: ['Hungary', 'Slovenia', 'Italy'] },
-      { countryCode: 'md', correctAnswer: 'Moldova', wrongAnswers: ['Romania', 'Andorra', 'San Marino'] }
+      { countryCode: 'ua', wrongAnswers: ['se', 'ro', 'md'] },
+      { countryCode: 'by', wrongAnswers: ['ru', 'lv', 'ua'] },
+      { countryCode: 'ro', wrongAnswers: ['td', 'md', 'ad'] },
+      { countryCode: 'bg', wrongAnswers: ['hu', 'si', 'it'] },
+      { countryCode: 'md', wrongAnswers: ['ro', 'ad', 'sm'] }
     ]
   },
 
@@ -73,11 +73,11 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'at', correctAnswer: 'Austria', wrongAnswers: ['Latvia', 'Poland', 'Denmark'] },
-      { countryCode: 'cz', correctAnswer: 'Czech Republic', wrongAnswers: ['Slovakia', 'Poland', 'Slovenia'] },
-      { countryCode: 'sk', correctAnswer: 'Slovakia', wrongAnswers: ['Czech Republic', 'Slovenia', 'Serbia'] },
-      { countryCode: 'hu', correctAnswer: 'Hungary', wrongAnswers: ['Bulgaria', 'Italy', 'Iran'] },
-      { countryCode: 'ch', correctAnswer: 'Switzerland', wrongAnswers: ['Denmark', 'Norway', 'Malta'] }
+      { countryCode: 'at', wrongAnswers: ['lv', 'pl', 'dk'] },
+      { countryCode: 'cz', wrongAnswers: ['sk', 'pl', 'si'] },
+      { countryCode: 'sk', wrongAnswers: ['cz', 'si', 'rs'] },
+      { countryCode: 'hu', wrongAnswers: ['bg', 'it', 'ir'] },
+      { countryCode: 'ch', wrongAnswers: ['dk', 'no', 'mt'] }
     ]
   },
 
@@ -89,11 +89,11 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'rs', correctAnswer: 'Serbia', wrongAnswers: ['Slovakia', 'Croatia', 'Russia'] },
-      { countryCode: 'ba', correctAnswer: 'Bosnia and Herzegovina', wrongAnswers: ['Kosovo', 'Croatia', 'North Macedonia'] },
-      { countryCode: 'hr', correctAnswer: 'Croatia', wrongAnswers: ['Serbia', 'Slovakia', 'Slovenia'] },
-      { countryCode: 'me', correctAnswer: 'Montenegro', wrongAnswers: ['Albania', 'Serbia', 'North Macedonia'] },
-      { countryCode: 'mk', correctAnswer: 'North Macedonia', wrongAnswers: ['Kosovo', 'Albania', 'Montenegro'] }
+      { countryCode: 'rs', wrongAnswers: ['sk', 'hr', 'ru'] },
+      { countryCode: 'ba', wrongAnswers: ['xk', 'hr', 'mk'] },
+      { countryCode: 'hr', wrongAnswers: ['rs', 'sk', 'si'] },
+      { countryCode: 'me', wrongAnswers: ['al', 'rs', 'mk'] },
+      { countryCode: 'mk', wrongAnswers: ['xk', 'al', 'me'] }
     ]
   },
 
@@ -105,11 +105,11 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'gr', correctAnswer: 'Greece', wrongAnswers: ['Finland', 'Israel', 'Cyprus'] },
-      { countryCode: 'cy', correctAnswer: 'Cyprus', wrongAnswers: ['Greece', 'Malta', 'San Marino'] },
-      { countryCode: 'mt', correctAnswer: 'Malta', wrongAnswers: ['Monaco', 'Switzerland', 'Liechtenstein'] },
-      { countryCode: 'sm', correctAnswer: 'San Marino', wrongAnswers: ['Vatican City', 'Andorra', 'Monaco'] },
-      { countryCode: 'mc', correctAnswer: 'Monaco', wrongAnswers: ['Poland', 'Indonesia', 'Malta'] }
+      { countryCode: 'gr', wrongAnswers: ['fi', 'il', 'cy'] },
+      { countryCode: 'cy', wrongAnswers: ['gr', 'mt', 'sm'] },
+      { countryCode: 'mt', wrongAnswers: ['mc', 'ch', 'li'] },
+      { countryCode: 'sm', wrongAnswers: ['va', 'ad', 'mc'] },
+      { countryCode: 'mc', wrongAnswers: ['pl', 'id', 'mt'] }
     ]
   },
 
@@ -121,11 +121,11 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'ad', correctAnswer: 'Andorra', wrongAnswers: ['Moldova', 'Romania', 'Chad'] },
-      { countryCode: 'li', correctAnswer: 'Liechtenstein', wrongAnswers: ['Luxembourg', 'Monaco', 'San Marino'] },
-      { countryCode: 'lu', correctAnswer: 'Luxembourg', wrongAnswers: ['Netherlands', 'France', 'Belgium'] },
-      { countryCode: 'va', correctAnswer: 'Vatican City', wrongAnswers: ['San Marino', 'Andorra', 'Monaco'] },
-      { countryCode: 'gi', correctAnswer: 'Gibraltar', wrongAnswers: ['Malta', 'Monaco', 'Cyprus'] }
+      { countryCode: 'ad', wrongAnswers: ['md', 'ro', 'td'] },
+      { countryCode: 'li', wrongAnswers: ['lu', 'mc', 'sm'] },
+      { countryCode: 'lu', wrongAnswers: ['nl', 'fr', 'be'] },
+      { countryCode: 'va', wrongAnswers: ['sm', 'ad', 'mc'] },
+      { countryCode: 'gi', wrongAnswers: ['mt', 'mc', 'cy'] }
     ]
   },
 
@@ -137,11 +137,11 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'fo', correctAnswer: 'Faroe Islands', wrongAnswers: ['Iceland', 'Norway', 'Greenland'] },
-      { countryCode: 'ax', correctAnswer: 'Åland Islands', wrongAnswers: ['Finland', 'Sweden', 'Faroe Islands'] },
-      { countryCode: 'gg', correctAnswer: 'Guernsey', wrongAnswers: ['Jersey', 'England', 'Isle of Man'] },
-      { countryCode: 'je', correctAnswer: 'Jersey', wrongAnswers: ['Guernsey', 'Isle of Man', 'England'] },
-      { countryCode: 'im', correctAnswer: 'Isle of Man', wrongAnswers: ['Guernsey', 'Jersey', 'Wales'] }
+      { countryCode: 'fo', wrongAnswers: ['is', 'no', 'gl'] },
+      { countryCode: 'ax', wrongAnswers: ['fi', 'se', 'fo'] },
+      { countryCode: 'gg', wrongAnswers: ['je', 'en', 'im'] },
+      { countryCode: 'je', wrongAnswers: ['gg', 'im', 'en'] },
+      { countryCode: 'im', wrongAnswers: ['gg', 'je', 'gb-wls'] }
     ]
   },
 
@@ -153,24 +153,14 @@ export const levelData: LevelData[] = [
     theme: 'flags',
     region: 'europe',
     questions: [
-      { countryCode: 'en', correctAnswer: 'England', wrongAnswers: ['Wales', 'Scotland', 'Northern Ireland'] },
-      { countryCode: 'gb-sct', correctAnswer: 'Scotland', wrongAnswers: ['England', 'Ireland', 'Wales'] },
-      { countryCode: 'gb-wls', correctAnswer: 'Wales', wrongAnswers: ['Scotland', 'Ireland', 'England'] },
-      { countryCode: 'gb-nir', correctAnswer: 'Northern Ireland', wrongAnswers: ['Ireland', 'Wales', 'Scotland'] },
-      { countryCode: 'xk', correctAnswer: 'Kosovo', wrongAnswers: ['Serbia', 'Albania', 'North Macedonia'] }
+      { countryCode: 'en', wrongAnswers: ['gb-wls', 'gb-sct', 'gb-nir'] },
+      { countryCode: 'gb-sct', wrongAnswers: ['en', 'ie', 'gb-wls'] },
+      { countryCode: 'gb-wls', wrongAnswers: ['gb-sct', 'ie', 'en'] },
+      { countryCode: 'gb-nir', wrongAnswers: ['ie', 'gb-wls', 'gb-sct'] },
+      { countryCode: 'xk', wrongAnswers: ['rs', 'al', 'mk'] }
     ]
   }
 ];
-
-// Helper function to get level by theme and level number
-export const getLevelData = (theme: string, levelNumber: number): LevelData | undefined => {
-  return levelData.find(level => level.theme === theme && level.name === `Level ${levelNumber}`);
-};
-
-// Helper function to get all levels for a theme
-export const getLevelsForTheme = (theme: string): LevelData[] => {
-  return levelData.filter(level => level.theme === theme);
-};
 
 export const getLevelsForThemeAndRegion = (theme: string, region: string): LevelData[] => {
   return levelData.filter(
@@ -180,11 +170,23 @@ export const getLevelsForThemeAndRegion = (theme: string, region: string): Level
   );
 };
 
-export const getLevelDataForThemeAndRegion = (theme: string, region: string, levelNumber: number): LevelData | undefined => {
+export const getLevelDataForThemeAndRegion = (theme: string, region: string, levelName: string): LevelData | undefined => {
+  if (levelName == "random") {
+    return {
+      id: 'flags-europe-random',
+      n: 11,
+      name: 'Level Random',
+      theme: 'flags',
+      region: 'europe',
+      questions: [
+        { type: 'specific-flag-random-answers' }
+      ]
+    }
+  }
   return levelData.find(
     level => 
       level.theme.toLowerCase() === theme.toLowerCase() 
         && level.region.toLowerCase() === region.toLowerCase() 
-        && level.n == levelNumber
+        && level.n.toString() === levelName
   );
 };

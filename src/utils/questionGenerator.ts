@@ -1,22 +1,24 @@
 // utils/questionGenerator.ts - Updated for new flag paths
 import { getCountries, getCountryByCode } from '../constants';
-import { Question, QuestionConfig, ManualQuestion, RandomQuestionConfig } from '../types';
+import { Question, QuestionConfig, ManualQuestion, RandomQuestionConfig, Country, Choice } from '../types';
+import { getCountriesByRegion } from './countriesLoader';
 
 // Generate a single random question with random answers
 const generateRandomFlagRandomAnswers = (wrongAnswerCount: number = 3): Question => {
   const countries = getCountries();
   const correct = countries[Math.floor(Math.random() * countries.length)];
   const wrong = countries
-    .filter(c => c.name !== correct.name)
+    .filter(c => c.nameEn !== correct.nameEn)
     .sort(() => 0.5 - Math.random())
     .slice(0, wrongAnswerCount);
-  
-  const choices = [correct.name, ...wrong.map(w => w.name)]
+
+  const choices = [countryToChoice(correct), ...wrong.map(countryToChoice)]
     .sort(() => 0.5 - Math.random());
-  
+
   return {
     flagUrl: correct.flagPath, // Use flagPath instead of constructing URL
-    correctName: correct.name,
+    correctEnName: correct.nameEn,
+    correctRuName: correct.nameRu,
     choices,
   };
 };
@@ -28,44 +30,27 @@ const generateSpecificFlagRandomAnswers = (countryCode: string, wrongAnswerCount
   if (!correct) {
     throw new Error(`Country with code ${countryCode} not found`);
   }
-  
+
   const wrong = countries
-    .filter(c => c.name !== correct.name)
+    .filter(c => c.nameEn !== correct.nameEn)
+    .filter(c => c.region === correct.region)
     .sort(() => 0.5 - Math.random())
     .slice(0, wrongAnswerCount);
-  
-  const choices = [correct.name, ...wrong.map(w => w.name)]
+
+  const choices = [countryToChoice(correct), ...wrong.map(countryToChoice)]
     .sort(() => 0.5 - Math.random());
-  
+
   return {
     flagUrl: correct.flagPath, // Use flagPath instead of constructing URL
-    correctName: correct.name,
+    correctEnName: correct.nameEn,
+    correctRuName: correct.nameRu,
     choices,
   };
 };
 
-// Generate random flag with specific answer choices
-const generateRandomFlagSpecificAnswers = (specificAnswers: string[]): Question => {
-  const countries = getCountries();
-  // Find countries that match the specific answers
-  const possibleCountries = countries.filter(c => specificAnswers.includes(c.name));
-  
-  if (possibleCountries.length === 0) {
-    throw new Error('No countries found matching the specific answers');
-  }
-  
-  const correct = possibleCountries[Math.floor(Math.random() * possibleCountries.length)];
-  const wrongAnswers = specificAnswers.filter(answer => answer !== correct.name);
-  
-  const choices = [correct.name, ...wrongAnswers]
-    .sort(() => 0.5 - Math.random());
-  
-  return {
-    flagUrl: correct.flagPath, // Use flagPath instead of constructing URL
-    correctName: correct.name,
-    choices,
-  };
-};
+const countryToChoice = (country: Country): Choice => {
+  return { en: country.nameEn, ru: country.nameRu }
+}
 
 // Generate question from manual configuration
 const generateFromManualConfig = (config: ManualQuestion): Question => {
@@ -73,14 +58,19 @@ const generateFromManualConfig = (config: ManualQuestion): Question => {
   if (!country) {
     throw new Error(`Country with code ${config.countryCode} not found`);
   }
-  
-  const choices = [config.correctAnswer, ...config.wrongAnswers]
+
+  const choices = [config.countryCode, ...config.wrongAnswers]
+    .map(countryCode => {
+      const countryByCode = getCountryByCode(countryCode)
+      return countryToChoice(countryByCode)
+    })
     .sort(() => 0.5 - Math.random());
-  
+
   return {
     flagUrl: country.flagPath, // Use flagPath instead of constructing URL
-    correctName: config.correctAnswer,
-    choices,
+    correctEnName: country.nameEn,
+    correctRuName: country.nameRu,
+    choices
   };
 };
 
@@ -89,19 +79,13 @@ const generateFromRandomConfig = (config: RandomQuestionConfig): Question => {
   switch (config.type) {
     case 'random-flag-random-answers':
       return generateRandomFlagRandomAnswers(config.wrongAnswerCount || 3);
-    
+
     case 'specific-flag-random-answers':
       if (!config.countryCode) {
         throw new Error('Country code required for specific-flag-random-answers');
       }
       return generateSpecificFlagRandomAnswers(config.countryCode, config.wrongAnswerCount || 3);
-    
-    case 'random-flag-specific-answers':
-      if (!config.specificAnswers || config.specificAnswers.length < 2) {
-        throw new Error('At least 2 specific answers required for random-flag-specific-answers');
-      }
-      return generateRandomFlagSpecificAnswers(config.specificAnswers);
-    
+
     default:
       throw new Error(`Unknown random question type: ${(config as any).type}`);
   }
@@ -131,9 +115,46 @@ export const generateFlagQuestions = (count: number): Question[] => {
   return generateQuestionsFromConfigs(configs);
 };
 
+export const generateRandomFlagQuestionsForRegion = (region: string): Question[] => {
+  const countries = getCountriesByRegion(getCountries(), region);
+
+  // Shuffle countries array (Fisher–Yates)
+  const shuffledCountries = [...countries];
+  for (let i = shuffledCountries.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledCountries[i], shuffledCountries[j]] = [shuffledCountries[j], shuffledCountries[i]];
+  }
+
+  return shuffledCountries.map(c => generateSpecificFlagRandomAnswers(c.code));
+}
+
+export function* generateInfiniteFlagQuestionsForRegion(region: string): Generator<Question> {
+  const countries = getCountriesByRegion(getCountries(), region);
+
+  if (countries.length === 0) {
+    console.warn("No countries found for region:", region);
+    return;
+  }
+
+  while (true) {
+    // Shuffle each loop to avoid repeating the same order
+    const shuffledCountries = [...countries];
+    for (let i = shuffledCountries.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledCountries[i], shuffledCountries[j]] = [shuffledCountries[j], shuffledCountries[i]];
+    }
+
+    // Yield one question per country
+    for (const c of shuffledCountries) {
+      yield generateSpecificFlagRandomAnswers(c.code);
+    }
+  }
+}
+
+
 // Helper type guards (same as before)
 export const isManualQuestion = (config: QuestionConfig): config is ManualQuestion => {
-  return 'countryCode' in config && 'correctAnswer' in config && 'wrongAnswers' in config;
+  return 'countryCode' in config && 'wrongAnswers' in config;
 };
 
 export const isRandomQuestion = (config: QuestionConfig): config is RandomQuestionConfig => {
