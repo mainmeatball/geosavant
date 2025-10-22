@@ -10,6 +10,8 @@ const LANGUAGES = [
 ];
 
 export const LanguageButton = () => {
+  console.log("LanguageButton rendering...");
+
   const { lang, setLang } = useGame();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);

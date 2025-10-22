@@ -11,6 +11,9 @@ import { SettingsButton } from "../../components/SettingsButton";
 import Fuse from "fuse.js";
 import { getCountries } from "../../constants";
 import { LanguageButton } from "../../components/LanguageButton";
+import { UserState } from "../../types";
+
+const user = "mainmeatball";
 
 export const LevelPage: React.FC = () => {
   const {
@@ -19,9 +22,12 @@ export const LevelPage: React.FC = () => {
     currentIndex,
     feedback,
     score,
+    userState,
     handleChoiceClick,
     handleAnswerInputSend,
     goBackToLevels,
+    saveUserState,
+    setUserState,
   } = useGame();
   const { theme, region, levelNumber } = useParams<{
     theme: string;
@@ -50,6 +56,13 @@ export const LevelPage: React.FC = () => {
     const results = fuse.search(freeAnswerInput);
     return results.slice(0, 5).map((result) => result.item); // Top 5 matches
   }, [freeAnswerInput, fuse]);
+
+  const doSaveUserState = (user: string, newUserState: UserState) => {
+    setUserState(newUserState); // update local state immediately
+    saveUserState(user, newUserState);
+  };
+
+  console.log("I am here");
 
   const handleFreeAnswerSubmit = () => {
     if (freeAnswerInput.trim() === "") return;
@@ -91,8 +104,12 @@ export const LevelPage: React.FC = () => {
       <LevelComplete
         theme={theme}
         region={region}
+        lvl={levelNumber}
         score={score}
         totalQuestions={questions.length}
+        user={user}
+        userState={userState}
+        saveUserState={doSaveUserState}
         onGoBack={goBackToLevels}
       />
     );
@@ -204,51 +221,6 @@ export const LevelPage: React.FC = () => {
               Submit
             </button>
           </form>
-          // <div className="free-answer-container">
-          //   <div className="input-wrapper">
-          //     <input
-          //       type="text"
-          //       className="free-answer-input"
-          //       placeholder="Type your answer..."
-          //       value={freeAnswerInput}
-          //       onChange={(e) => {
-          //         setFreeAnswerInput(e.target.value);
-          //         setShowHints(true);
-          //       }}
-          //       onKeyDown={(e) => {
-          //         if (e.key === "Enter") {
-          //           handleFreeAnswerSubmit();
-          //         } else if (e.key === "Escape") {
-          //           setShowHints(false);
-          //         }
-          //       }}
-          //       onFocus={() => setShowHints(true)}
-          //       onBlur={() => {
-          //         // Delay to allow hint click to register
-          //         setTimeout(() => setShowHints(false), 200);
-          //       }}
-          //     />
-          //     {showHints && hints.length > 0 && (
-          //       <div className="hints-dropdown">
-          //         {hints.map((hint, idx) => (
-          //           <div
-          //             key={idx}
-          //             className="hint-item"
-          //             onClick={() => handleHintClick(hint)}
-          //           >
-          //             {hint}
-          //           </div>
-          //         ))}
-          //       </div>
-          //     )}
-          //   </div>
-          //   <button
-          //     className="submit-answer-btn"
-          //     onClick={handleFreeAnswerSubmit}
-          //   >
-          //     Submit
-          //   </button>
-          // </div>
         )}
       </div>
     </>

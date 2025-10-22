@@ -38,6 +38,27 @@ export interface CompletedLevels {
   [key: string]: CompletedLevel;
 }
 
+export interface UsersState {
+  [user: string]: UserState;
+}
+
+export interface ThemesState {
+  [theme: string]: ThemeState;
+}
+
+export interface UserState {
+  settings: Record<string, any>;
+  themes: ThemesState;
+}
+
+export interface ThemeState {
+  [region: string]: RegionState;
+}
+
+export interface RegionState {
+  [lvl: string]: number;
+}
+
 export interface ManualQuestion {
   countryCode: string;
   wrongAnswers: string[];

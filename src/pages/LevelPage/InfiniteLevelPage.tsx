@@ -10,6 +10,8 @@ import { Choice, Question } from "../../types";
 import { LanguageButton } from "../../components/LanguageButton";
 
 export const InfiniteLevelPage: React.FC = () => {
+  console.log("InfiniteLevelPage rendering...");
+
   const {
     questionsGenerator,
     feedback,

@@ -6,6 +6,8 @@ import { SettingsButton } from "../../components/SettingsButton";
 import { LanguageButton } from "../../components/LanguageButton";
 
 export const MainPage: React.FC = () => {
+  console.log("MainPage rendering...");
+
   const { handleThemeClick } = useGame();
   return (
     <div>

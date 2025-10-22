@@ -8,6 +8,8 @@ import { SettingsButton } from "../../components/SettingsButton";
 import { LanguageButton } from "../../components/LanguageButton";
 
 export const ThemePage: React.FC = () => {
+  console.log("ThemePage rendering...");
+
   const { handleRegionClick } = useGame();
   const { theme } = useParams<{ theme: string }>();
 

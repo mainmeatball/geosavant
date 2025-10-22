@@ -1,32 +1,61 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import { Trophy, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import "./LevelComplete.scss";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import confetti from "canvas-confetti";
+import { UserState } from "../types";
 
 interface LevelCompleteProps {
-  theme,
-  region,
+  theme;
+  region;
+  lvl: string;
   score: number;
   totalQuestions: number;
+  user: string;
+  userState: UserState;
+  saveUserState: (user: string, state: UserState) => void;
   onGoBack: () => void;
 }
 
 export const LevelComplete: React.FC<LevelCompleteProps> = ({
   theme,
   region,
+  lvl,
   score,
   totalQuestions,
+  user,
+  userState,
+  saveUserState,
   onGoBack,
 }) => {
+  console.log("LevelComplete rendering...");
   const percentage = Math.round((score / totalQuestions) * 100);
   const isPerfect = percentage === 100;
 
-  
   if (isPerfect) {
     confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-  };
+  }
+
+  useEffect(() => {
+    if (!theme || !region || !lvl) return;
+
+    const newUserState = {
+      ...userState,
+      themes: {
+        ...userState.themes,
+        [theme]: {
+          ...(userState.themes[theme] || {}),
+          [region]: {
+            ...(userState.themes[theme]?.[region] || {}),
+            [lvl]: score,
+          },
+        },
+      },
+    };
+
+    saveUserState(user, newUserState);
+  }, []);
 
   return (
     <motion.div
@@ -58,20 +87,17 @@ export const LevelComplete: React.FC<LevelCompleteProps> = ({
           </div>
           <p className="level-complete__percentage">{percentage}% correct</p>
         </div>
-        
-        <Link
-          to={`/learn/${theme}/${region}`} 
-          className='link' 
-          key='flags'>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="level-complete__button"
-              onClick={onGoBack}
-            >
-              <ArrowLeft className="level-complete__button-icon" />
-              Go Back to Levels
-            </motion.button>
+
+        <Link to={`/learn/${theme}/${region}`} className="link" key="flags">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="level-complete__button"
+            onClick={onGoBack}
+          >
+            <ArrowLeft className="level-complete__button-icon" />
+            Go Back to Levels
+          </motion.button>
         </Link>
       </motion.div>
     </motion.div>

@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import './SettingsButton.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
-import { useGame } from '../context/GameContext';
-import { AnswersType, Settings } from '../types';
+import React, { useState } from "react";
+import "./SettingsButton.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { useGame } from "../context/GameContext";
+import { AnswersType, Settings } from "../types";
 
 export const SettingsButton = () => {
-  const { settings, saveSettings } = useGame()
+  console.log("SettingsButton rendering...");
+  const { settings, saveSettings } = useGame();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -25,14 +26,14 @@ export const SettingsButton = () => {
   };
 
   const handleSave = () => {
-    saveSettings({ answersType: answerType });
+    saveSettings("mainmeatball", { answersType: answerType });
     closeSettings();
   };
 
   return (
     <>
-      <button 
-        className={`settings-button ${isAnimating ? 'rotating' : ''}`} 
+      <button
+        className={`settings-button ${isAnimating ? "rotating" : ""}`}
         onClick={openSettings}
       >
         <FontAwesomeIcon icon={faGear} />
@@ -42,10 +43,10 @@ export const SettingsButton = () => {
         <div className="settings-overlay" onClick={closeSettings}>
           <div className="settings-popup" onClick={(e) => e.stopPropagation()}>
             <h2 className="settings-title">Settings</h2>
-            
+
             <div className="settings-field">
               <label htmlFor="answer-type">Answer Type:</label>
-              <select 
+              <select
                 id="answer-type"
                 value={answerType}
                 onChange={(e) => setAnswerType(e.target.value as AnswersType)}
@@ -64,4 +65,4 @@ export const SettingsButton = () => {
       )}
     </>
   );
-}
+};

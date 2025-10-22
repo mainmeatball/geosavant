@@ -1,6 +1,7 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export const BackButton = ({ to }) => {
+  console.log("BackButton rendering...");
   const navigate = useNavigate();
 
   const handleClick = () => {

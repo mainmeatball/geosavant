@@ -11,6 +11,7 @@ import {
   CompletedLevels,
   Settings,
   Choice,
+  UserState,
 } from "../types";
 import { getLevelDataForThemeAndRegion } from "../data/levels";
 import {
@@ -35,6 +36,7 @@ interface GameContextType {
   selectedRegion: string | null;
   selectedLevel: string | null;
   lang: string;
+  userState: UserState;
 
   // actions
   handleThemeClick: (theme: string) => void;
@@ -50,8 +52,11 @@ interface GameContextType {
   goBackToRegions: () => void;
   goBackToLevels: () => void;
   resetGame: () => void;
-  saveSettings: (settings: Settings) => void;
+  saveSettings: (user: string, settings: Settings) => void;
   setLang: (lang: string) => void;
+  loadUserState: (user: string) => Promise<UserState>;
+  saveUserState: (user: string, userState: UserState) => void;
+  setUserState: (userState: UserState) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -70,10 +75,13 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [settings, setSettings] = useState<Settings>({
-    // default settings
     answersType: "4-choices",
   });
   const [lang, setLang] = useState(localStorage.getItem("lang") || "en");
+  const [userState, setUserState] = useState<UserState>({
+    settings: {},
+    themes: {},
+  });
   const [playCorrect] = useSound(
     `${import.meta.env.BASE_URL}sounds/answer-correct2.wav`
   );
@@ -253,9 +261,42 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     setFeedback(null);
   };
 
-  const saveSettings = (settings: Settings) => {
+  const saveSettings = (user: string, settings: Settings) => {
+    fetch("http://localhost:8080/api/settings?user=" + user, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(settings),
+    });
     console.log("Saved settings:", settings.answersType);
     setSettings(settings);
+  };
+
+  async function loadUserState(user: string): Promise<UserState> {
+    const res = await fetch("http://localhost:8080/api/user?user=" + user, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    return res.json();
+  }
+
+  const saveUserState = (user: string, userState: UserState) => {
+    fetch(`http://localhost:8080/api/state?user=${user}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userState),
+    })
+      .then(() => console.log("Saved user state:", userState))
+      .then(() => setUserState(userState))
+      .catch((err) => console.error("Failed to save user state:", err));
   };
 
   return (
@@ -272,6 +313,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         selectedRegion,
         selectedLevel,
         lang,
+        userState,
         handleThemeClick,
         handleRegionClick,
         handleLevelClick,
@@ -283,6 +325,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         resetGame,
         saveSettings,
         setLang,
+        loadUserState,
+        saveUserState,
+        setUserState,
       }}
     >
       {children}
